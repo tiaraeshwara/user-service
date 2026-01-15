@@ -1,8 +1,11 @@
 package com.user_service.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.user_service.dao.UserDao;
+import com.user_service.model.User;
 
 @Service("UserService")
 public class UserService {
@@ -14,6 +17,9 @@ public class UserService {
 
     public String getGreeting() {
         return userDao.getGreetingDao();
+    }
+    public List<User> getUserInformation() {
+        return userDao.getUserInformation();
     }
     
 }

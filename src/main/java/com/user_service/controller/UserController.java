@@ -1,8 +1,11 @@
 package com.user_service.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.user_service.model.User;
 import com.user_service.service.UserService;
 
 @RestController
@@ -22,5 +25,10 @@ public class UserController {
     @RequestMapping("/enter-name")
     public String enterName() {
         return "Tiara Eshwara";
+    }
+    
+    @RequestMapping("/getusers")
+    public List<User> getUsers() {
+        return userService.getUserInformation();
     }
 }
