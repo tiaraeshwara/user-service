@@ -46,4 +46,21 @@ public class UserDao {
         }
     }
 
+    public User getUserByUserId(int id) {
+        try {
+            String query = "SELECT FirstName, LastName, Age, Gender, City, PhoneNumber, Email FROM ts.user_info WHERE UserID = :id";
+
+            NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
+            MapSqlParameterSource parameters = new MapSqlParameterSource();
+            parameters.addValue("id", id);
+            List<User> users = template.query(query, parameters, new UserMapper());
+            if (!CollectionUtils.isEmpty(users)) {
+                return users.get(0);
+            }
+            return null;
+        } catch (DataAccessException e) {
+            String errorMsg = "Error fetching user information by userId.";
+            throw new RuntimeException(errorMsg, e);
+        }
+    }
 }
