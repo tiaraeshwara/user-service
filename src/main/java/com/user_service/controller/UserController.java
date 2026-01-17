@@ -2,6 +2,7 @@ package com.user_service.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,9 +27,14 @@ public class UserController {
     public String enterName() {
         return "Tiara Eshwara";
     }
-    
+
     @RequestMapping("/getusers")
     public List<User> getUsers() {
         return userService.getUserInformation();
+    }
+
+    @RequestMapping("/getuserbyid/{id}")
+    public User getUserById(@PathVariable Integer id) {
+        return userService.getUserByUserId(id);
     }
 }
