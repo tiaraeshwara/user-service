@@ -63,4 +63,22 @@ public class UserDao {
             throw new RuntimeException(errorMsg, e);
         }
     }
+
+    public User getUserByUserEmail(String email) {
+        try {
+            String query = "SELECT FirstName, LastName, Age, Gender, City, PhoneNumber, Email FROM ts.user_info WHERE Email = :email";
+
+            NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
+            MapSqlParameterSource parameters = new MapSqlParameterSource();
+            parameters.addValue("email", email);
+            List<User> users = template.query(query, parameters, new UserMapper());
+            if (!CollectionUtils.isEmpty(users)) {
+                return users.get(0);
+            }
+            return null;
+        } catch (DataAccessException e) {
+            String errorMsg = "Error fetching user by email.";
+            throw new RuntimeException(errorMsg, e);
+        }
+    }
 }
