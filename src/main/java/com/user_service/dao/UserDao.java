@@ -3,6 +3,7 @@ package com.user_service.dao;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -78,6 +79,27 @@ public class UserDao {
             return null;
         } catch (DataAccessException e) {
             String errorMsg = "Error fetching user by email.";
+            throw new RuntimeException(errorMsg, e);
+        }
+    }
+     public User addUser(User user) {
+        try {
+            String query = "INSERT INTO ts.user_info (UserID, FirstName, LastName, Age, Gender, City, PhoneNumber, Email) VALUES (:userId, :firstName, :lastName, :age, :gender, :city, :phoneNumber, :email)";
+
+            NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
+            MapSqlParameterSource parameters = new MapSqlParameterSource();
+            parameters.addValue("userId", new Random().nextInt(Integer.MAX_VALUE));
+            parameters.addValue("firstName", user.getFirstName());
+            parameters.addValue("lastName", user.getLastName());
+            parameters.addValue("age", user.getAge());
+            parameters.addValue("gender", user.getGender());
+            parameters.addValue("city", user.getCity());
+            parameters.addValue("phoneNumber", user.getPhoneNumber());
+            parameters.addValue("email", user.getEmail());
+            template.update(query, parameters);
+            return user;
+        } catch (DataAccessException e) {
+            String errorMsg = "Error inserting user information into the database.";
             throw new RuntimeException(errorMsg, e);
         }
     }

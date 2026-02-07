@@ -2,7 +2,10 @@ package com.user_service.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,28 +21,34 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping("/greet")
+    @GetMapping("/greet")
     public String greeting() {
         return userService.getGreeting();
     }
 
-    @RequestMapping("/enter-name")
+    @GetMapping("/enter-name")
     public String enterName() {
         return "Tiara Eshwara";
     }
 
-    @RequestMapping("/getusers")
+    @GetMapping("/getusers")
     public List<User> getUsers() {
         return userService.getUserInformation();
     }
 
-    @RequestMapping("/getuserbyid/{id}")
+    @GetMapping("/getuserbyid/{id}")
     public User getUserById(@PathVariable Integer id) {
         return userService.getUserByUserId(id);
     }
 
-    @RequestMapping("/getuserbyemail/{email}")
+    @GetMapping("/getuserbyemail/{email}")
     public User getUserByEmail(@PathVariable String email) {
         return userService.getUserByUserEmail(email);
+    }
+
+    @PostMapping("/add-user")
+    public User addUser(@RequestBody User user) {
+        return userService.addUser(user.getFirstName(), user.getLastName(), user.getAge(),
+                user.getGender(), user.getCity(), user.getEmail(), user.getPhoneNumber());
     }
 }
