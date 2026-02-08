@@ -50,4 +50,15 @@ public class UserService {
         }
         return userDao.updateUser(id, user);
     }
+
+    public boolean deleteUser(Integer id) {
+        if (id == null) {
+            throw new IllegalArgumentException("id must be provided");
+        }
+        User existing = userDao.getUserByUserId(id);
+        if (existing == null) {
+            return false;
+        }
+        return userDao.deleteUser(id);
+    }
 }
