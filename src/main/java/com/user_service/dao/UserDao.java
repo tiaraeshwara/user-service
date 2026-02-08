@@ -82,7 +82,8 @@ public class UserDao {
             throw new RuntimeException(errorMsg, e);
         }
     }
-     public User addUser(User user) {
+
+    public User addUser(User user) {
         try {
             String query = "INSERT INTO ts.user_info (UserID, FirstName, LastName, Age, Gender, City, PhoneNumber, Email) VALUES (:userId, :firstName, :lastName, :age, :gender, :city, :phoneNumber, :email)";
 
@@ -103,7 +104,7 @@ public class UserDao {
             throw new RuntimeException(errorMsg, e);
         }
     }
-    
+
     public User updateUser(int id, User user) {
         try {
             String query = "UPDATE ts.user_info SET FirstName = :firstName, LastName = :lastName, Age = :age, Gender = :gender, City = :city, PhoneNumber = :phoneNumber, Email = :email WHERE UserID = :userId";
@@ -125,4 +126,19 @@ public class UserDao {
             throw new RuntimeException(errorMsg, e);
         }
     }
+
+    public boolean deleteUser(int id) {
+        try {
+            String query = "DELETE FROM ts.user_info WHERE UserID = :userId";
+            NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
+            MapSqlParameterSource parameters = new MapSqlParameterSource();
+            parameters.addValue("userId", id);
+            int rows = template.update(query, parameters);
+            return rows > 0;
+        } catch (DataAccessException e) {
+            String errorMsg = "Error deleting user information from the database.";
+            throw new RuntimeException(errorMsg, e);
+        }
+    }
+
 }
