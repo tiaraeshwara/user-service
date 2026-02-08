@@ -8,7 +8,7 @@ import org.springframework.lang.Nullable;
 
 import com.user_service.model.User;
 
-public class UserMapper implements RowMapper<User>{
+public class UserMapper implements RowMapper<User> {
 
     @SuppressWarnings("null")
     @Override
@@ -25,6 +25,5 @@ public class UserMapper implements RowMapper<User>{
 
         return user;
     }
-    
-    
+
 }

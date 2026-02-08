@@ -103,4 +103,26 @@ public class UserDao {
             throw new RuntimeException(errorMsg, e);
         }
     }
+    
+    public User updateUser(int id, User user) {
+        try {
+            String query = "UPDATE ts.user_info SET FirstName = :firstName, LastName = :lastName, Age = :age, Gender = :gender, City = :city, PhoneNumber = :phoneNumber, Email = :email WHERE UserID = :userId";
+
+            NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
+            MapSqlParameterSource parameters = new MapSqlParameterSource();
+            parameters.addValue("userId", id);
+            parameters.addValue("firstName", user.getFirstName());
+            parameters.addValue("lastName", user.getLastName());
+            parameters.addValue("age", user.getAge());
+            parameters.addValue("gender", user.getGender());
+            parameters.addValue("city", user.getCity());
+            parameters.addValue("phoneNumber", user.getPhoneNumber());
+            parameters.addValue("email", user.getEmail());
+            template.update(query, parameters);
+            return user;
+        } catch (DataAccessException e) {
+            String errorMsg = "Error inserting user information into the database.";
+            throw new RuntimeException(errorMsg, e);
+        }
+    }
 }

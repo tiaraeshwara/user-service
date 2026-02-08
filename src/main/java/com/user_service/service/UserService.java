@@ -33,7 +33,21 @@ public class UserService {
 
     public User addUser(String firstName, String lastName, Integer age, String gender, String city, String email,
             String phoneNumber) {
-        User user = new User(firstName, lastName, age, gender, city, email, phoneNumber);
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setAge(age);
+        user.setGender(gender);
+        user.setCity(city);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
         return userDao.addUser(user);
+    }
+
+    public User updateUser(Integer id, User user) {
+        if (id == null) {
+            throw new IllegalArgumentException("id must be provided");
+        }
+        return userDao.updateUser(id, user);
     }
 }
