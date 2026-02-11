@@ -102,7 +102,7 @@ public class UserDao {
         } catch (DataAccessException e) {
             String errorMsg = "Error inserting user information into the database.";
             throw new RuntimeException(errorMsg, e);
-        }
+        } 
     }
 
     public User updateUser(int id, User user) {
