@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 import com.user_service.model.User;
+import com.user_service.model.LoginRequest;
 import com.user_service.service.UserService;
 
 @Slf4j
@@ -123,6 +124,30 @@ public class UserController {
             throw e;
         } catch (Exception e) {
             log.error("Error while adding user with email: {}", user.getEmail(), e);
+            throw e;
+        }
+    }
+
+    @PostMapping("/login")
+    public User login(@RequestBody LoginRequest loginRequest) {
+        log.info("Login endpoint called for email: {}", loginRequest == null ? "<null>" : loginRequest.getEmail());
+        try {
+            if (loginRequest == null || loginRequest.getEmail() == null || loginRequest.getEmail().isBlank()) {
+                log.warn("Invalid login request payload");
+                throw new IllegalArgumentException("email must be provided");
+            }
+            User user = userService.login(loginRequest.getEmail(), loginRequest.getPhoneNumber());
+            if (user != null) {
+                log.info("Login successful for email: {}", loginRequest.getEmail());
+            } else {
+                log.warn("Login failed for email: {}", loginRequest.getEmail());
+            }
+            return user;
+        } catch (IllegalArgumentException e) {
+            log.error("Validation error during login: {}", e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            log.error("Error during login for email: {}", loginRequest == null ? "<null>" : loginRequest.getEmail(), e);
             throw e;
         }
     }
