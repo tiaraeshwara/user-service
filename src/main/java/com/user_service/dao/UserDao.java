@@ -108,6 +108,7 @@ public class UserDao {
             int attempts = 0;
             do {
                 userId = new Random().nextInt(Integer.MAX_VALUE - 1) + 1; // avoid zero
+                user.setUserId(userId);
                 String checkQuery = "SELECT UserID FROM ts.user_info WHERE UserID = :userId";
                 MapSqlParameterSource checkParams = new MapSqlParameterSource();
                 checkParams.addValue("userId", userId);
@@ -174,9 +175,10 @@ public class UserDao {
             parameters.addValue("phoneNumber", user.getPhoneNumber());
             parameters.addValue("email", user.getEmail());
             template.update(query, parameters);
+            user.setUserId(id);
             return user;
         } catch (DataAccessException e) {
-            String errorMsg = "Error inserting user information into the database.";
+            String errorMsg = "Error updating user information in the database.";
             throw new RuntimeException(errorMsg, e);
         }
     }
