@@ -32,7 +32,7 @@ public class UserDao {
 
     public List<User> getUserInformation() {
         try {
-            String query = "SELECT FirstName, LastName, Age, Gender, City, PhoneNumber, Email FROM ts.user_info";
+            String query = "SELECT UserID, FirstName, LastName, Age, Gender, City, PhoneNumber, Email FROM ts.user_info";
 
             NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
             MapSqlParameterSource parameters = new MapSqlParameterSource();
@@ -49,7 +49,7 @@ public class UserDao {
 
     public User getUserByUserId(int id) {
         try {
-            String query = "SELECT FirstName, LastName, Age, Gender, City, PhoneNumber, Email FROM ts.user_info WHERE UserID = :id";
+            String query = "SELECT UserID, FirstName, LastName, Age, Gender, City, PhoneNumber, Email FROM ts.user_info WHERE UserID = :id";
 
             NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
             MapSqlParameterSource parameters = new MapSqlParameterSource();
@@ -67,7 +67,7 @@ public class UserDao {
 
     public User getUserByUserEmail(String email) {
         try {
-            String query = "SELECT FirstName, LastName, Age, Gender, City, PhoneNumber, Email FROM ts.user_info WHERE Email = :email";
+            String query = "SELECT UserID, FirstName, LastName, Age, Gender, City, PhoneNumber, Email FROM ts.user_info WHERE Email = :email";
 
             NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
             MapSqlParameterSource parameters = new MapSqlParameterSource();
